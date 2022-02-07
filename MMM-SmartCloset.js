@@ -1,17 +1,45 @@
 /* global Module */
 
 /* Magic Mirror
- * Module: {{MODULE_NAME}}
+ * Module: MMM-SmartCloset
  *
- * By {{AUTHOR_NAME}}
- * {{LICENSE}} Licensed.
+ * By Veronica Osei
+ * 
  */
 
-Module.register("{{MODULE_NAME}}", {
+Module.register("MMM-SmartCloset", {
 	defaults: {
+		apikey: "",
+		latitude: "",
+		longitude: "",
+		updateInterval: 10, // minutes
+		requestDelay: 0,
+		language: config.language,
+		units: "metric",
+		imageDir: "./Outfits/",
 		updateInterval: 60000,
-		retryDelay: 5000
+		retryDelay: 5000,
+		selectFromSubdirectories: true,
+		maxWidth: "100%",
+		maxHeight: "100%",
+		randomOrder: true,
 	},
+
+
+	
+
+	// LOAD IMAGES
+	images: [],
+	shownImagesCount: 5,
+	imageIndex: 0,
+
+
+	// loaded: function(callback) {
+	// 	this.finishLoading();
+	// 	Log.log(this.name + ' is loaded!');
+	// 	callback();
+	// },
+
 
 	requiresVersion: "2.1.0", // Required version of MagicMirror
 
@@ -38,6 +66,7 @@ Module.register("{{MODULE_NAME}}", {
 	 */
 	getData: function() {
 		var self = this;
+		
 
 		var urlApi = "https://jsonplaceholder.typicode.com/posts/1";
 		var retry = true;
@@ -86,6 +115,26 @@ Module.register("{{MODULE_NAME}}", {
 
 	getDom: function() {
 		var self = this;
+		// creating container to container HTML elements
+		var wrapper = document.createElement("div");
+		// I need to know if we got a problem, so tell me!
+		if (this.errorMessage != null) {
+			wrapper.innerHTML = this.errorMessage;
+		}
+		if (!this.imageLoadFinished) {
+			wrapper.innerHTML = this.translate("LOADING");
+			return wrapper;
+		}
+
+		// otherwise work
+		// else {
+		// 	if (this.loaded === true) {
+		// 		if (this.loaded === true) {
+
+		// 		}
+		// 	}
+		// }
+
 
 		// create element wrapper for show into the module
 		var wrapper = document.createElement("div");
@@ -122,7 +171,13 @@ Module.register("{{MODULE_NAME}}", {
 
 	getStyles: function () {
 		return [
-			"{{MODULE_NAME}}.css",
+			"MMM-SmartCloset.css",
+		];
+	},
+// covert HTML to nunjucks
+	getTemplate: function () {
+		return [
+			"MMM-SmartCloset.njk",
 		];
 	},
 
@@ -130,8 +185,7 @@ Module.register("{{MODULE_NAME}}", {
 	getTranslations: function() {
 		//FIXME: This can be load a one file javascript definition
 		return {
-			en: "translations/en.json",
-			es: "translations/es.json"
+			en: "translations/en.json"
 		};
 	},
 
@@ -143,12 +197,12 @@ Module.register("{{MODULE_NAME}}", {
 
 		// the data if load
 		// send notification to helper
-		this.sendSocketNotification("{{MODULE_NAME}}-NOTIFICATION_TEST", data);
+		this.sendSocketNotification("SmartCloset_Get", data);
 	},
 
 	// socketNotificationReceived from helper
 	socketNotificationReceived: function (notification, payload) {
-		if(notification === "{{MODULE_NAME}}-NOTIFICATION_TEST") {
+		if(notification === "SmartCloset-NOTIFICATION_TEST") {
 			// set dataNotification
 			this.dataNotification = payload;
 			this.updateDom();

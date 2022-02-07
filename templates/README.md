@@ -1,8 +1,8 @@
-# {{MODULE_NAME}}
+# MMM-SmartCloset
 
 This is a module for the [MagicMirror²](https://github.com/MichMich/MagicMirror/).
 
-{{DESCRIPTION}}
+Thinking about what to wear for the day? This Module is here to simplify your everyday looks by allowing you to see it displayed as you get ready for the day.
 
 ## Using the module
 
@@ -11,7 +11,7 @@ To use this module, add the following configuration block to the modules array i
 var config = {
     modules: [
         {
-            module: '{{MODULE_NAME}}',
+            module: 'MMM-SmartCloset',
             config: {
                 // See below for configurable options
             }

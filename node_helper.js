@@ -1,11 +1,14 @@
 /* Magic Mirror
- * Node Helper: {{MODULE_NAME}}
+ * Node Helper: MMM-SmartCloset
  *
- * By {{AUTHOR_NAME}}
- * {{LICENSE}} Licensed.
+ * By Veronica Osei
+ * MIT Licensed.
  */
 
 var NodeHelper = require("node_helper");
+var express = require("express");
+var path = require("path");
+var request = require("request");
 
 module.exports = NodeHelper.create({
 
