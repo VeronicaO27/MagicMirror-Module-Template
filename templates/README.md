@@ -12,7 +12,9 @@ var config = {
     modules: [
         {
             module: 'MMM-SmartCloset',
+            position: 'bottom-left',
             config: {
+                photoDir:"./modules/MMM-SmartCloset/Outfits",
                 // See below for configurable options
             }
         }

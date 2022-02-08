@@ -26,10 +26,9 @@ Module.register("MMM-SmartCloset", {
 	},
 
 
-	
 
 	// LOAD IMAGES
-	images: [],
+	images: {},
 	shownImagesCount: 5,
 	imageIndex: 0,
 
@@ -44,6 +43,7 @@ Module.register("MMM-SmartCloset", {
 	requiresVersion: "2.1.0", // Required version of MagicMirror
 
 	start: function() {
+		Log.info(" Starting module: Smart Closet ")
 		var self = this;
 		var dataRequest = null;
 		var dataNotification = null;
@@ -117,6 +117,19 @@ Module.register("MMM-SmartCloset", {
 		var self = this;
 		// creating container to container HTML elements
 		var wrapper = document.createElement("div");
+		var imageDisplay = document.createElement("div");
+		var imageTag = document.createElement("img");
+		var classAttribute = document.createElement("div")
+		// Image tag property
+		imageTag.src = "./outfits/Fall/fall_outfit1.jpeg";
+		wrapper.appendChild(imageTag);
+
+		for (fit in outfits) {
+			var seasonOutfit = this.config.seasons[fit];
+		}
+
+
+
 		// I need to know if we got a problem, so tell me!
 		if (this.errorMessage != null) {
 			wrapper.innerHTML = this.errorMessage;
@@ -125,6 +138,9 @@ Module.register("MMM-SmartCloset", {
 			wrapper.innerHTML = this.translate("LOADING");
 			return wrapper;
 		}
+
+		var imageFolder = document.createElement("div");
+		imageFolder.i
 
 		// otherwise work
 		// else {
